@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Area 51</string>
+    <string name="e_mail">E-mail</string>
+    <string name="logar">Logar</string>
+    <string name="cadastrar">Cadastrar</string>
+
+</resources>
