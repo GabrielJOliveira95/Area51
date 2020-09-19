@@ -1,13 +1,12 @@
 package com.example.area51.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import com.example.area51.R
 import com.example.area51.model.GetFirebaseService
 import com.example.area51.model.Usuario
-import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import kotlinx.android.synthetic.main.activity_logar.*
@@ -64,15 +63,19 @@ class LogarActivity : AppCompatActivity() {
             auth?.signInWithEmailAndPassword(user.email!!, user.senha!!)?.addOnCompleteListener {
 
                 if (it.isSuccessful) {
-                    Toast.makeText(this, "Sucesso", Toast.LENGTH_SHORT).show()
+
+                    startActivity(Intent(this, InicialActivity::class.java))
+                    Toast.makeText(this, "Bem-Vindo de volta, Gabriel", Toast.LENGTH_LONG).show()
                 } else {
                     try {
                         throw it.exception!!
                     } catch (e: FirebaseAuthInvalidUserException) {
-                        Toast.makeText(
-                            this@LogarActivity, "Usuário não cadastrado", Toast.LENGTH_LONG).show()
+                        textInputLayoutEmail.isErrorEnabled = true
+                        textInputLayoutEmail.error = "E-mail não cadastrado"
                     } catch (e: FirebaseAuthInvalidCredentialsException) {
-                        Toast.makeText(this@LogarActivity, "Usuário ou senha inválido", Toast.LENGTH_LONG).show()
+                        textInputLayoutEmail.isErrorEnabled = false
+                        textInputLayoutSenha.isErrorEnabled = true
+                        textInputLayoutSenha.error = "Senha inválida"
                     }
                 }
             }

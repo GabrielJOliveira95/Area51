@@ -3,5 +3,9 @@
     <string name="e_mail">E-mail</string>
     <string name="logar">Logar</string>
     <string name="cadastrar">Cadastrar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="title_activity_main">MainActivity2</string>
+
 
 </resources>

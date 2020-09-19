@@ -1,59 +1,75 @@
-package com.example.area51.activity 
+package com.example.area51.activity
 
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import androidx.appcompat.app.AppCompatActivity
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.area51.R
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
-import kotlinx.android.synthetic.main.activity_inicial.*
-import java.io.ByteArrayOutputStream
+import com.example.area51.adapter.AdapterFotos
+import com.example.area51.model.GetFirebaseService
+import kotlinx.android.synthetic.main.content_main.*
 
 
 class InicialActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_inicial)
+        setContentView(R.layout.activity_main2)
+        setSupportActionBar(findViewById(R.id.toolbar))
+        supportActionBar?.title = "Galeria"
 
-        view.visibility = View.INVISIBLE
+        configurarCalendario()
+        recyclerViewConfig()
 
-        img51.setOnClickListener{
-            view.visibility = View.VISIBLE
-            view.background = img51.drawable
-        }
-         upload.setOnClickListener {
-
-             val storage = Firebase.storage
-             val storageReference = storage.reference
-             val imgReference = storageReference.child("fotos/").child("area51.jpg")
-
-             img51.isDrawingCacheEnabled = true
-             img51.buildDrawingCache()
-
-             val bitMap = (img51.drawable as BitmapDrawable).bitmap
-             val baos = ByteArrayOutputStream()
-             bitMap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-
-             val data = baos.toByteArray()
-
-             val upLoadTask = imgReference.putBytes(data)
-
-
-             with(upLoadTask) {
-
-                 addOnFailureListener {
-                     val mensagem = it.message
-                     Toast.makeText(this@InicialActivity, mensagem, Toast.LENGTH_LONG).show()
-                 }
-                 addOnCompleteListener {
-                     Toast.makeText(this@InicialActivity, "Sucesso", Toast.LENGTH_LONG).show()
-                 }
-             }
-
-
-         }
-     }
+        /*findViewById<FloatingActionButton>(R.id.menu).setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }*/
     }
+
+
+    fun irUpLoadFotos(view:View){
+        startActivity(Intent(this@InicialActivity, UpLoadFotoActivity::class.java))
+    }
+
+    fun configurarCalendario(){
+        val meses = arrayOf("Janeiro", "Fevereiro", "Março","Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro")
+        calendarView.setTitleMonths(meses)
+    }
+
+    fun recyclerViewConfig(){
+        val adapter = AdapterFotos()
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = GridLayoutManager(applicationContext, 3)
+        recyclerView.hasFixedSize()
+    }
+
+    fun sair() {
+        val alertDialog = AlertDialog.Builder(this)
+
+        alertDialog.setTitle("Sair")
+        alertDialog.setMessage("Tem certeza de que deseja sair?")
+        alertDialog.setNegativeButton("Não", null)
+        alertDialog.setIcon(R.drawable.ic_baseline_exit_to_app_24)
+        alertDialog.setPositiveButton("Sim") { _: DialogInterface, _: Int ->
+
+            val fireBaseAuth = GetFirebaseService.getFireBaseAuth()
+            fireBaseAuth?.signOut()
+            finish()
+
+        }
+        alertDialog.create()
+        alertDialog.show()
+    }
+
+    override fun onBackPressed() {
+        sair()
+    }
+
+
+}
