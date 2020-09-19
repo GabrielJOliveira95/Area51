@@ -21,7 +21,10 @@ import java.security.Permission
 import java.util.jar.Manifest
 
 class UpLoadFotoActivity : AppCompatActivity() {
-    private val arrayOfPermission = arrayOf(android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+    private val arrayOfPermission = arrayOf(
+        android.Manifest.permission.CAMERA,
+        android.Manifest.permission.READ_EXTERNAL_STORAGE
+    )
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +56,18 @@ class UpLoadFotoActivity : AppCompatActivity() {
         }
         uploadCamera.setOnClickListener {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(intent, 1)
+
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivityForResult(intent, 1)
+            }
+        }
+
+        uploadGaleria.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+
+            if (intent.resolveActivity(packageManager) != null){
+                startActivityForResult(intent, 1)
+            }
         }
 
     }
