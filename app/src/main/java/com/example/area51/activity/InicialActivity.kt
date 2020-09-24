@@ -1,17 +1,21 @@
 package com.example.area51.activity
 
+import android.Manifest
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.area51.R
 import com.example.area51.adapter.AdapterFotos
-import com.example.area51.model.GetFirebaseService
+import com.example.area51.helper.GetFirebaseService
 import kotlinx.android.synthetic.main.content_main.*
 
 
@@ -23,8 +27,18 @@ class InicialActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.title = "Galeria"
 
-        configurarCalendario()
-        recyclerViewConfig()
+        when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) -> {
+                configurarCalendario()
+                recyclerViewConfig()
+
+            }
+            else -> {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.INTERNET), 1)
+            }
+
+        }
+
 
         /*findViewById<FloatingActionButton>(R.id.menu).setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -32,17 +46,43 @@ class InicialActivity : AppCompatActivity() {
         }*/
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-    fun irUpLoadFotos(view:View){
+        for (item in permissions) {
+            if (requestCode == PackageManager.PERMISSION_DENIED) {
+                Toast.makeText(applicationContext, "Acesso negado", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    fun irUpLoadFotos(view: View) {
         startActivity(Intent(this@InicialActivity, UpLoadFotoActivity::class.java))
     }
 
-    fun configurarCalendario(){
-        val meses = arrayOf("Janeiro", "Fevereiro", "Março","Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro")
+    fun configurarCalendario() {
+        val meses = arrayOf(
+            "Janeiro",
+            "Fevereiro",
+            "Março",
+            "Abril",
+            "Maio",
+            "Junho",
+            "Julho",
+            "Agosto",
+            "Setembro",
+            "Outubro",
+            "Novembro",
+            "Dezembro"
+        )
         calendarView.setTitleMonths(meses)
     }
 
-    fun recyclerViewConfig(){
+    fun recyclerViewConfig() {
         val adapter = AdapterFotos()
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(applicationContext, 3)

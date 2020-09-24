@@ -4,10 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.example.area51.R
-import com.example.area51.model.GetFirebaseService
+import com.example.area51.helper.GetFirebaseService
 import com.heinrichreimersoftware.materialintro.app.IntroActivity
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide
-import kotlinx.android.synthetic.main.activity_main2.*
 
 class MainActivity : IntroActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

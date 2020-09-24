@@ -7,9 +7,9 @@
     tools:context=".activity.UpLoadFotoActivity">
 
     <ImageView
-        android:id="@+id/img_teste"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:id="@+id/img_escolhida_upload"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/uploadCamera"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/etupload" />
+        app:srcCompat="@drawable/area51logo" />
 
     <ImageView
         android:id="@+id/uploadCamera"
@@ -31,7 +31,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_teste"
+        app:layout_constraintTop_toBottomOf="@+id/img_escolhida_upload"
         app:srcCompat="@drawable/ic_baseline_camera_alt_24" />
 
     <ImageView
@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/uploadCamera"
-        app:layout_constraintTop_toBottomOf="@+id/img_teste"
+        app:layout_constraintTop_toBottomOf="@+id/img_escolhida_upload"
         app:srcCompat="@drawable/ic_baseline_photo_library_24" />
 
     <Button
@@ -55,11 +55,12 @@
         android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="upload"
         android:background="@color/colorAccent"
+        android:text="upload"
         android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/uploadCamera" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.area51.model
+package com.example.area51.helper
 
 import android.util.Base64
 

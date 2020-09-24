@@ -1,5 +1,6 @@
 package com.example.area51.model
 
+import com.example.area51.helper.GetFirebaseService
 import com.google.firebase.database.Exclude
 
 class Usuario(@get:Exclude var id: String? = null, var nome: String? = null, var email: String? = null, @get: Exclude var senha: String? = null) {

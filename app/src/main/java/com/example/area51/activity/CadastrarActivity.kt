@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.area51.R
-import com.example.area51.model.GetFirebaseService
-import com.example.area51.model.MyBase64
+import com.example.area51.helper.GetFirebaseService
+import com.example.area51.helper.MyBase64
 import com.example.area51.model.Usuario
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
